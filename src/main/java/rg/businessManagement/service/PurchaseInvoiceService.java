@@ -3,6 +3,7 @@ package rg.businessManagement.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 
 import rg.businessManagement.domain.EntityDetail;
@@ -15,6 +16,7 @@ public class PurchaseInvoiceService {
 	@Autowired
 	PurchaseInvoiceRepository purchaseInvoiceRepository;
 
+	@Transactional
 	public String savePurchase(PurchaseInvoice request) {
 		purchaseInvoiceRepository.savePurchaseDetails(request.getItemList());
 		purchaseInvoiceRepository.savePurchaseHeader(request);
