@@ -1,11 +1,9 @@
 package rg.businessManagement.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import rg.businessManagement.domain.EntityDetail;
 import rg.businessManagement.domain.PurchaseInvoice;
@@ -24,7 +22,11 @@ public class PurchaseInvoiceService {
 	}
 
 	public List<EntityDetail> fetchEntityList() {
+		StopWatch timer = new StopWatch();
+		timer.start();
 		List<EntityDetail> entityList = purchaseInvoiceRepository.fetchEntityList();
+		timer.stop();
+		System.out.println(timer.getTotalTimeMillis());
 		return entityList;
 	}
 
