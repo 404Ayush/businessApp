@@ -18,7 +18,7 @@ public class PurchaseInvoiceService {
 
 	@Transactional
 	public String savePurchase(PurchaseInvoice request) {
-		purchaseInvoiceRepository.savePurchaseDetails(request.getItemList());
+		purchaseInvoiceRepository.savePurchaseDetails(request.getItemList(), request.getInvoiceNo());
 		purchaseInvoiceRepository.savePurchaseHeader(request);
 		return new String("Purchase Invoice Saved. Please check the same.");
 	}
