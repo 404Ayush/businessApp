@@ -8,6 +8,7 @@ public class ItemDetail {
 	private Double discountL1;
 	private Double discountL2;
 	private int gstRate;
+	private int hsn;
 	
 	public String getItemName() {
 		return itemName;
@@ -45,11 +46,16 @@ public class ItemDetail {
 	public void setGstRate(int gstRate) {
 		this.gstRate = gstRate;
 	}
+	public int getHsn() {
+		return hsn;
+	}
+	public void setHsn(int hsn) {
+		this.hsn = hsn;
+	}
 	
 	@Override
 	public String toString() {
 		return "ItemDetail [itemName=" + itemName + ", qty=" + qty + ", rate=" + rate + ", discountL1=" + discountL1
-				+ ", discountL2=" + discountL2 + ", gstRate=" + gstRate + "]";
+				+ ", discountL2=" + discountL2 + ", gstRate=" + gstRate + ", hsn=" + hsn + "]";
 	}
-	
 }

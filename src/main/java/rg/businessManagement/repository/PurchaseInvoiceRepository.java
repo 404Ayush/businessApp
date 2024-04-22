@@ -23,8 +23,8 @@ public class PurchaseInvoiceRepository {
 			+ "VALUES (:ENTITY_NAME, :INVOICE_NO, :TOTAL_AMOUNT, :GST_NUMBER, :INVOICE_DATE, FALSE)";
 	
 	private String SQL_INSERT_PURCHASE_DETAILS = "INSERT INTO PURCHASE_DETAILS("
-			+ "ITEM_NAME, QUANTITY, RATE, DISCOUNT_L1, DISCOUNT_L2, GST_RATE) "
-			+ "VALUES (:ITEM_NAME, :QUANTITY, :RATE, :DISCOUNT_L1, :DISCOUNT_L2, :GST_RATE)";
+			+ "ITEM_NAME, QUANTITY, RATE, DISCOUNT_L1, DISCOUNT_L2, GST_RATE, HSN) "
+			+ "VALUES (:ITEM_NAME, :QUANTITY, :RATE, :DISCOUNT_L1, :DISCOUNT_L2, :GST_RATE, :HSN)";
 	
 	private String SQL_SELECT_ENTITY_DETAILS = "SELECT DISTINCT ENTITY_NAME, GST_NUMBER FROM PURCHASE_HEADER";
 	
@@ -54,7 +54,8 @@ public class PurchaseInvoiceRepository {
 			.addValue("RATE", item.getRate())
 			.addValue("DISCOUNT_L1", item.getDiscountL1())
 			.addValue("DISCOUNT_L2", item.getDiscountL2())
-			.addValue("GST_RATE", item.getGstRate());
+			.addValue("GST_RATE", item.getGstRate())
+			.addValue("HSN", item.getHsn());
 			
 			params.add(parameterSource);
 		}
