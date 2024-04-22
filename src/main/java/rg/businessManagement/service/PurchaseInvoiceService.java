@@ -20,6 +20,7 @@ public class PurchaseInvoiceService {
 	public String savePurchase(PurchaseInvoice request) {
 		purchaseInvoiceRepository.savePurchaseDetails(request.getItemList(), request.getInvoiceNo());
 		purchaseInvoiceRepository.savePurchaseHeader(request);
+		purchaseInvoiceRepository.saveStockDetails(request.getItemList(), request.getInvoiceNo(), request.getEntityName(), "A");
 		return new String("Purchase Invoice Saved. Please check the same.");
 	}
 

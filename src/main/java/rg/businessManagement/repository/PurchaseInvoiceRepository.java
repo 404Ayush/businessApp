@@ -26,6 +26,10 @@ public class PurchaseInvoiceRepository {
 			+ "ITEM_NAME, QUANTITY, RATE, DISCOUNT_L1, DISCOUNT_L2, GST_RATE, HSN, INVOICE_NO) "
 			+ "VALUES (:ITEM_NAME, :QUANTITY, :RATE, :DISCOUNT_L1, :DISCOUNT_L2, :GST_RATE, :HSN, :INVOICE_NO)";
 	
+	private String SQL_INSERT_INTO_STOCK_TABLE = "INSERT INTO STOCK("
+			+ "ENTITY_NAME, INVOICE_NO, ITEM_NAME, QTY, STATUS, PURCHASE_PRICE) "
+			+ "VALUES (:ENTITY_NAME, :INVOICE_NO, :ITEM, :QTY, :STATUS, :PURCHASE_PRICE)";
+	
 	private String SQL_SELECT_ENTITY_DETAILS = "SELECT DISTINCT ENTITY_NAME, GST_NUMBER FROM PURCHASE_HEADER";
 	
 	public void savePurchaseHeader(PurchaseInvoice request) {
@@ -63,6 +67,29 @@ public class PurchaseInvoiceRepository {
 		
 		jdbcTemplate.batchUpdate(SQL_INSERT_PURCHASE_DETAILS, params.toArray(MapSqlParameterSource[]::new));
 	}
+	
+	public void saveStockDetails(List<ItemDetail> items, String invoiceNo, String entityName, String status) {
+		
+		List<MapSqlParameterSource> params = new ArrayList<MapSqlParameterSource>();
+		
+		for(ItemDetail item : items) {
+			
+			MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+			parameterSource
+			.addValue("ENTITY_NAME", entityName)
+			.addValue("INVOICE_NO", invoiceNo)
+			.addValue("ITEM", item.getItemName())
+			.addValue("QTY", item.getQty())
+			.addValue("RATE", item.getRate())
+			.addValue("PURCHASE_PRICE", calculatePurchasePrice(item.getRate(), item.getDiscountL1(), item.getDiscountL2()))
+			.addValue("STATUS", status);
+			;
+			
+			params.add(parameterSource);
+		}
+		
+		jdbcTemplate.batchUpdate(SQL_INSERT_INTO_STOCK_TABLE, params.toArray(MapSqlParameterSource[]::new));
+	}
 
 	public List<EntityDetail> fetchEntityList() {
 		
@@ -77,5 +104,17 @@ public class PurchaseInvoiceRepository {
 		});
 		
 		return entityList;
+	}
+	
+	private Double calculatePurchasePrice(Double rate, Double discL1, Double discL2) {
+		if(null==discL1 && null==discL2) {
+			return rate;
+		}
+		else if(null!=discL1 && null==discL2) {
+			return rate-((rate*discL1)/100);
+		}
+		else {
+			return rate-((rate*discL1)/100)-(((rate-((rate*discL1)/100))*discL2)/100);
+		}
 	}
 }

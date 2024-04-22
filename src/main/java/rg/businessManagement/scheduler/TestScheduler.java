@@ -12,7 +12,7 @@ public class TestScheduler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestScheduler.class);
 	
-	@Scheduled(cron="0 */10 * * * *")
+	@Scheduled(cron="0 */1 * * * *")
 	public void testScheduler() {
 		logger.info("App is live at: {}", ZonedDateTime.now().toString());
 	}
