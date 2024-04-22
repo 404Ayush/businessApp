@@ -19,8 +19,8 @@ public class PurchaseInvoiceRepository {
 	NamedParameterJdbcTemplate jdbcTemplate;
 	
 	private String SQL_INSERT_PURCHASE_HEADER = "INSERT INTO PURCHASE_HEADER("
-			+ "ENTITY_NAME, INVOICE_NO, TOTAL_AMOUNT, GST_NUMBER) "
-			+ "VALUES (:ENTITY_NAME, :INVOICE_NO, :TOTAL_AMOUNT, :GST_NUMBER)";
+			+ "ENTITY_NAME, INVOICE_NO, TOTAL_AMOUNT, GST_NUMBER, INVOICE_DATE, PAID_STATUS) "
+			+ "VALUES (:ENTITY_NAME, :INVOICE_NO, :TOTAL_AMOUNT, :GST_NUMBER, :INVOICE_DATE, FALSE)";
 	
 	private String SQL_INSERT_PURCHASE_DETAILS = "INSERT INTO PURCHASE_DETAILS("
 			+ "ITEM_NAME, QUANTITY, RATE, DISCOUNT_L1, DISCOUNT_L2, GST_RATE) "
@@ -35,6 +35,7 @@ public class PurchaseInvoiceRepository {
 		.addValue("ENTITY_NAME", request.getEntityName())
 		.addValue("INVOICE_NO", request.getInvoiceNo())
 		.addValue("TOTAL_AMOUNT", request.getTotalAmt())
+		.addValue("INVOICE_DATE", request.getInvoiceDate())
 		.addValue("GST_NUMBER", request.getGstNo());
 		
 		jdbcTemplate.update(SQL_INSERT_PURCHASE_HEADER, parameterSource);

@@ -7,6 +7,7 @@ public class PurchaseInvoice {
 	private String entityName;
 	private String gstNo;
 	private String invoiceNo;
+	private String invoiceDate;
 	private List<ItemDetail> itemList;
 	private Double totalAmt;
 	
@@ -41,10 +42,16 @@ public class PurchaseInvoice {
 		this.gstNo = gstNo;
 	}
 	
+	public String getInvoiceDate() {
+		return invoiceDate;
+	}
+	public void setInvoiceDate(String invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
 	@Override
 	public String toString() {
 		return "PurchaseInvoice [entityName=" + entityName + ", gstNo=" + gstNo + ", invoiceNo=" + invoiceNo
-				+ ", itemList=" + itemList + ", totalAmt=" + totalAmt + "]";
+				+ ", invoiceDate=" + invoiceDate + ", itemList=" + itemList + ", totalAmt=" + totalAmt + "]";
 	}
 	
 }
